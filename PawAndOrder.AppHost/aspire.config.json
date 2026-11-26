@@ -1,0 +1,6 @@
+{
+  "appHost": {
+    "language": "csharp",
+    "path": "PawAndOrder.AppHost.csproj"
+  }
+}

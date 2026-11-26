@@ -1,0 +1,15 @@
+bin/
+obj/
+node_modules/
+dist/
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.njsproj
+*.dbmdl
+*.jfm
+frontend/.vite/
+backend/**/bin/
+backend/**/obj/

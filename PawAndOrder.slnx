@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/backend/" />
+  <Folder Name="/backend/src/">
+    <Project Path="backend/src/PawAndOrder.Api/PawAndOrder.Api.csproj" />
+    <Project Path="backend/src/PawAndOrder.Application/PawAndOrder.Application.csproj" />
+    <Project Path="backend/src/PawAndOrder.Domain/PawAndOrder.Domain.csproj" />
+    <Project Path="backend/src/PawAndOrder.Infrastructure/PawAndOrder.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/backend/tests/">
+    <Project Path="backend/tests/PawAndOrder.Api.Tests/PawAndOrder.Api.Tests.csproj" />
+    <Project Path="backend/tests/PawAndOrder.Application.Tests/PawAndOrder.Application.Tests.csproj" />
+  </Folder>
+  <Project Path="PawAndOrder.AppHost/PawAndOrder.AppHost.csproj" Id="1536e639-57b7-4710-97f2-41950304cb72" />
+  <Project Path="PawAndOrder.ServiceDefaults/PawAndOrder.ServiceDefaults.csproj" />
+</Solution>
