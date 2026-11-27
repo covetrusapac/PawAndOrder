@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using PawAndOrder.Api.Shared;
 using PawAndOrder.Application;
 using PawAndOrder.Domain;
 using PawAndOrder.Infrastructure;
@@ -34,7 +35,7 @@ public static class ApiRoutes
 
         group.MapPost("/login", async (LoginRequest request, IValidator<LoginRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -164,7 +165,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (ClientUpsertRequest request, IValidator<ClientUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -191,7 +192,7 @@ public static class ApiRoutes
 
         group.MapPut("/{id:int}", async (int id, ClientUpsertRequest request, IValidator<ClientUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -297,7 +298,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (PatientUpsertRequest request, IValidator<PatientUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -328,7 +329,7 @@ public static class ApiRoutes
 
         group.MapPut("/{id:int}", async (int id, PatientUpsertRequest request, IValidator<PatientUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -405,7 +406,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (AppointmentUpsertRequest request, IValidator<AppointmentUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -431,7 +432,7 @@ public static class ApiRoutes
 
         group.MapPut("/{id:int}", async (int id, AppointmentUpsertRequest request, IValidator<AppointmentUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -517,7 +518,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (ConsultUpsertRequest request, IValidator<ConsultUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -604,7 +605,7 @@ public static class ApiRoutes
 
         group.MapPut("/{id:int}", async (int id, ConsultUpsertRequest request, IValidator<ConsultUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -635,7 +636,7 @@ public static class ApiRoutes
 
         group.MapPost("/{id:int}/diagnoses", async (int id, ConsultDiagnosisRequest request, IValidator<ConsultDiagnosisRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -670,7 +671,7 @@ public static class ApiRoutes
 
         group.MapPost("/{id:int}/procedures", async (int id, ConsultProcedureRequest request, IValidator<ConsultProcedureRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -708,7 +709,7 @@ public static class ApiRoutes
 
         group.MapPost("/{id:int}/medications", async (int id, ConsultMedicationRequest request, IValidator<ConsultMedicationRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -729,7 +730,7 @@ public static class ApiRoutes
             InventoryLot? lot = null;
             if (product.TrackInventory)
             {
-                lot = await ResolveLotAsync(db, product.Id, request.InventoryLotId, request.Quantity, cancellationToken);
+                lot = await InventoryAllocation.ResolveLotAsync(db, product.Id, request.InventoryLotId, request.Quantity, cancellationToken);
                 if (lot is null)
                 {
                     return Results.BadRequest("Unable to allocate stock for the selected medication.");
@@ -766,7 +767,7 @@ public static class ApiRoutes
 
         group.MapPost("/{id:int}/vaccinations", async (int id, ConsultVaccinationRequest request, IValidator<ConsultVaccinationRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -789,7 +790,7 @@ public static class ApiRoutes
 
                 if (product.TrackInventory)
                 {
-                    lot = await ResolveLotAsync(db, product.Id, request.InventoryLotId, 1m, cancellationToken);
+                    lot = await InventoryAllocation.ResolveLotAsync(db, product.Id, request.InventoryLotId, 1m, cancellationToken);
                     if (lot is null)
                     {
                         return Results.BadRequest("Unable to allocate stock for the selected vaccination.");
@@ -886,20 +887,20 @@ public static class ApiRoutes
                 }
 
                 product ??= await db.Products.FirstAsync(x => x.Sku == "SRV-CONSULT", cancellationToken);
-                invoice.Lines.Add(BuildInvoiceLine(product, procedure.Quantity, null, procedure.ProcedureText));
+                invoice.Lines.Add(InvoiceLineBuilder.BuildInvoiceLine(product, procedure.Quantity, null, procedure.ProcedureText));
             }
 
             if (!invoice.Lines.Any())
             {
                 var consultProduct = await db.Products.FirstAsync(x => x.Sku == "SRV-CONSULT", cancellationToken);
-                invoice.Lines.Add(BuildInvoiceLine(consultProduct, 1m, null));
+                invoice.Lines.Add(InvoiceLineBuilder.BuildInvoiceLine(consultProduct, 1m, null));
             }
 
             foreach (var medication in consult.Medications)
             {
                 if (medication.Product is not null)
                 {
-                    invoice.Lines.Add(BuildInvoiceLine(medication.Product, medication.Quantity, medication.InventoryLotId));
+                    invoice.Lines.Add(InvoiceLineBuilder.BuildInvoiceLine(medication.Product, medication.Quantity, medication.InventoryLotId));
                 }
             }
 
@@ -916,7 +917,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (DirectInvoiceCreateRequest request, IValidator<DirectInvoiceCreateRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -1003,7 +1004,7 @@ public static class ApiRoutes
 
         group.MapPost("/{id:int}/lines", async (int id, InvoiceLineRequest request, IValidator<InvoiceLineRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -1027,7 +1028,7 @@ public static class ApiRoutes
 
                 if (product.TrackInventory)
                 {
-                    lot = await ResolveLotAsync(db, product.Id, request.InventoryLotId, request.Quantity, cancellationToken);
+                    lot = await InventoryAllocation.ResolveLotAsync(db, product.Id, request.InventoryLotId, request.Quantity, cancellationToken);
                     if (lot is null)
                     {
                         return Results.BadRequest("Unable to allocate stock for the selected line item.");
@@ -1052,7 +1053,7 @@ public static class ApiRoutes
             var description = string.IsNullOrWhiteSpace(request.Description) ? product?.Name ?? string.Empty : request.Description;
             var lineType = product is not null ? (product.TrackInventory ? InvoiceLineType.Product : InvoiceLineType.Service) : request.LineType;
 
-            var line = BuildInvoiceLineFromValues(product?.Id, description, lineType, request.Quantity, unitPriceExGst, isTaxable, lot?.Id);
+            var line = InvoiceLineBuilder.BuildInvoiceLineFromValues(product?.Id, description, lineType, request.Quantity, unitPriceExGst, isTaxable, lot?.Id);
             line.StockDispensed = lot is not null;
             invoice.Lines.Add(line);
             SeedData.RecalculateInvoice(invoice);
@@ -1102,7 +1103,7 @@ public static class ApiRoutes
 
         group.MapPost("/{id:int}/payments", async (int id, PaymentRequest request, IValidator<PaymentRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -1218,7 +1219,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (ProductUpsertRequest request, IValidator<ProductUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -1345,7 +1346,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (VendorUpsertRequest request, IValidator<VendorUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -1421,7 +1422,7 @@ public static class ApiRoutes
 
         group.MapPost("", async (PurchaseOrderUpsertRequest request, IValidator<PurchaseOrderUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -1469,7 +1470,7 @@ public static class ApiRoutes
 
         group.MapPost("/{id:int}/receive", async (int id, ReceivePurchaseOrderRequest request, IValidator<ReceivePurchaseOrderRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
         {
-            var validationProblem = await ValidateAsync(request, validator);
+            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
             if (validationProblem is not null)
             {
                 return validationProblem;
@@ -1644,59 +1645,5 @@ public static class ApiRoutes
 
             return Results.Ok(new { items });
         });
-    }
-
-    private static InvoiceLine BuildInvoiceLine(Product product, decimal quantity, int? inventoryLotId, string? descriptionOverride = null)
-    {
-        var (subtotal, gstAmount, total) = PricingMath.Calculate(quantity, product.DefaultSalePriceExGst, product.IsTaxable);
-        return BuildInvoiceLineFromValues(
-            product.Id,
-            descriptionOverride ?? product.Name,
-            product.TrackInventory ? InvoiceLineType.Product : InvoiceLineType.Service,
-            quantity,
-            product.DefaultSalePriceExGst,
-            product.IsTaxable,
-            inventoryLotId);
-    }
-
-    private static InvoiceLine BuildInvoiceLineFromValues(int? productId, string description, InvoiceLineType lineType, decimal quantity, decimal unitPriceExGst, bool isTaxable, int? inventoryLotId)
-    {
-        var (subtotal, gstAmount, total) = PricingMath.Calculate(quantity, unitPriceExGst, isTaxable);
-        return new InvoiceLine
-        {
-            ProductId = productId,
-            Description = description,
-            LineType = lineType,
-            Quantity = quantity,
-            UnitPriceExGst = unitPriceExGst,
-            LineSubtotalExGst = subtotal,
-            GstRate = isTaxable ? PricingMath.GstRate : 0m,
-            GstAmount = gstAmount,
-            LineTotalIncGst = total,
-            IsTaxable = isTaxable,
-            InventoryLotId = inventoryLotId,
-        };
-    }
-
-    private static async Task<InventoryLot?> ResolveLotAsync(PawAndOrderDbContext db, int productId, int? requestedLotId, decimal quantity, CancellationToken cancellationToken)
-    {
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        IQueryable<InventoryLot> query = db.InventoryLots.Where(x =>
-            x.ProductId == productId &&
-            x.QuantityOnHand >= quantity &&
-            (x.ExpiryDate == null || x.ExpiryDate >= today));
-
-        if (requestedLotId.HasValue)
-        {
-            return await query.FirstOrDefaultAsync(x => x.Id == requestedLotId.Value, cancellationToken);
-        }
-
-        return await query.OrderBy(x => x.ExpiryDate ?? DateOnly.MaxValue).ThenBy(x => x.ReceivedDate).FirstOrDefaultAsync(cancellationToken);
-    }
-
-    private static async Task<IResult?> ValidateAsync<T>(T request, IValidator<T> validator)
-    {
-        var result = await validator.ValidateAsync(request);
-        return result.IsValid ? null : Results.ValidationProblem(result.ToDictionary());
     }
 }
