@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\src\PawAndOrder.Api\PawAndOrder.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\..\docs\api\openapi.v1.json" Link="ApiContract\openapi.v1.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
 </Project>
