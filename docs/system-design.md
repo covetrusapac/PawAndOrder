@@ -135,6 +135,10 @@ that quietly changes behaviour is a failed refactor, so each of these needs its 
 5. **Auth is a demo stub**, not authentication: login returns a synthetic token, `me` ignores the
    caller, and no endpoint is protected. Out of scope for this work but should not be mistaken for a
    security boundary.
+6. **`GET /api/reports/revenue` returns 500 on any database with issued invoices.** EF Core cannot
+   translate `DateOnly.FromDateTime(...)` used as a `GroupBy` key. Confirmed present on `main` before
+   the refactor and moved verbatim; logged as `.scratch/api-endpoint-decomposition/bugs/001-revenue-report-500.md`.
+   Not fixed here.
 
 ## Verification status
 
@@ -143,7 +147,14 @@ solution builds with no new warnings, all 31 backend tests pass with no pre-exis
 the regenerated contract is byte-identical to the pre-refactor baseline, the route-table test passes
 with no database running, and the frontend type-checks and builds.
 
-The manual smoke walk (the full clinic workflow: book → arrive → consult → finalize → invoice →
-payment, plus inventory receipt and all six reports) had **not** been performed at merge time because
-no SQL Server instance was running in the verification environment. It remains the one outstanding
-gate; the automated evidence proves the HTTP contract and the build, not runtime behaviour.
+The manual smoke walk was performed on a fresh SQL Server 2022 container with seeded demo data,
+against a freshly built API. It covered sign-in, client list/search/detail, patient list/detail,
+booking, the appointment list, arrive, start-consult (including the idempotent second call), consult
+detail, diagnosis, procedure, medication dispensing, vaccination, consult update, finalize,
+generate-invoice (including the idempotent second call), invoice issue, full payment to a zero
+balance, inventory lots, and purchase-order create → submit → receive. All passed. Five of the six
+reports passed; `/reports/revenue` failed for the pre-existing reason recorded in Follow-ups item 6.
+
+No regression was observed: every failure found is reproducible on `main` and the contract artifact
+did not change.
+
