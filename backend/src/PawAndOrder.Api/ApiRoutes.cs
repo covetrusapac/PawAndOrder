@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using PawAndOrder.Api.Endpoints;
 using PawAndOrder.Api.Shared;
 using PawAndOrder.Application;
 using PawAndOrder.Domain;
@@ -13,8 +14,8 @@ public static class ApiRoutes
     {
         var api = app.MapGroup("/api");
 
-        MapAuth(api);
-        MapLookups(api);
+        api.MapAuthEndpoints();
+        api.MapLookupEndpoints();
         MapClients(api);
         MapPatients(api);
         MapAppointments(api);
@@ -22,81 +23,11 @@ public static class ApiRoutes
         MapInvoices(api);
         MapProducts(api);
         MapInventory(api);
-        MapVendors(api);
+        api.MapVendorEndpoints();
         MapPurchaseOrders(api);
         MapReports(api);
 
         return app;
-    }
-
-    private static void MapAuth(RouteGroupBuilder api)
-    {
-        var group = api.MapGroup("/auth");
-
-        group.MapPost("/login", async (LoginRequest request, IValidator<LoginRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
-        {
-            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
-            if (validationProblem is not null)
-            {
-                return validationProblem;
-            }
-
-            var user = await db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Username == request.Username && x.IsActive, cancellationToken);
-            if (user is null || !PasswordHasher.Verify(request.Password, user.PasswordHash))
-            {
-                return Results.Unauthorized();
-            }
-
-            return Results.Ok(new
-            {
-                token = $"demo-{user.Username}",
-                user = new { user.Id, user.Username, user.DisplayName, user.Role },
-            });
-        });
-
-        group.MapGet("/me", async (PawAndOrderDbContext db, CancellationToken cancellationToken) =>
-        {
-            var user = await db.Users.AsNoTracking().OrderBy(x => x.Id).FirstAsync(cancellationToken);
-            return Results.Ok(new { user.Id, user.Username, user.DisplayName, user.Role });
-        });
-    }
-
-    private static void MapLookups(RouteGroupBuilder api)
-    {
-        api.MapGet("/lookups/bootstrap", async (PawAndOrderDbContext db, CancellationToken cancellationToken) =>
-        {
-            var clinicians = await db.Users.AsNoTracking()
-                .Where(x => x.Role == UserRole.Veterinarian && x.IsActive)
-                .OrderBy(x => x.DisplayName)
-                .Select(x => new { x.Id, x.DisplayName })
-                .ToListAsync(cancellationToken);
-
-            var appointmentTypes = await db.AppointmentTypes.AsNoTracking()
-                .Where(x => x.IsActive)
-                .OrderBy(x => x.Name)
-                .Select(x => new { x.Id, x.Name, x.DurationMinutes, x.ColorHex })
-                .ToListAsync(cancellationToken);
-
-            var diagnoses = await db.DiagnosisCatalogItems.AsNoTracking()
-                .Where(x => x.IsActive)
-                .OrderBy(x => x.Name)
-                .Select(x => new { x.Id, x.Name, x.Code })
-                .ToListAsync(cancellationToken);
-
-            var procedures = await db.ProcedureCatalogItems.AsNoTracking()
-                .Where(x => x.IsActive)
-                .OrderBy(x => x.Name)
-                .Select(x => new { x.Id, x.Name, x.Code, x.DefaultProductId })
-                .ToListAsync(cancellationToken);
-
-            var vaccinationTypes = await db.VaccinationTypes.AsNoTracking()
-                .Where(x => x.IsActive)
-                .OrderBy(x => x.Name)
-                .Select(x => new { x.Id, x.Name, x.Species, x.DefaultIntervalMonths })
-                .ToListAsync(cancellationToken);
-
-            return Results.Ok(new { clinicians, appointmentTypes, diagnoses, procedures, vaccinationTypes });
-        });
     }
 
     private static void MapClients(RouteGroupBuilder api)
@@ -1327,43 +1258,6 @@ public static class ApiRoutes
 
             await db.SaveChangesAsync(cancellationToken);
             return Results.Ok(new { productId, inventoryLotId = lot?.Id, quantityDelta });
-        });
-    }
-
-    private static void MapVendors(RouteGroupBuilder api)
-    {
-        var group = api.MapGroup("/vendors");
-
-        group.MapGet("", async (PawAndOrderDbContext db, CancellationToken cancellationToken) =>
-        {
-            var items = await db.Vendors.AsNoTracking()
-                .OrderBy(x => x.Name)
-                .Select(x => new { x.Id, x.Name, x.Phone, x.Email, x.ContactName, openOrders = x.PurchaseOrders.Count(po => po.Status != PurchaseOrderStatus.Received && po.Status != PurchaseOrderStatus.Cancelled) })
-                .ToListAsync(cancellationToken);
-
-            return Results.Ok(new { items });
-        });
-
-        group.MapPost("", async (VendorUpsertRequest request, IValidator<VendorUpsertRequest> validator, PawAndOrderDbContext db, CancellationToken cancellationToken) =>
-        {
-            var validationProblem = await EndpointValidation.ValidateAsync(request, validator);
-            if (validationProblem is not null)
-            {
-                return validationProblem;
-            }
-
-            var vendor = new Vendor
-            {
-                Name = request.Name,
-                Phone = request.Phone,
-                Email = request.Email,
-                ContactName = request.ContactName,
-                Notes = request.Notes,
-            };
-
-            db.Vendors.Add(vendor);
-            await db.SaveChangesAsync(cancellationToken);
-            return Results.Created($"/api/vendors/{vendor.Id}", new { vendor.Id });
         });
     }
 
