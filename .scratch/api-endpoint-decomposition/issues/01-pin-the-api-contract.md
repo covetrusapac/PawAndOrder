@@ -8,12 +8,12 @@ This ticket moves no endpoint code. Its only purpose is to make the rest of the 
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A reference API description artifact is committed, generated from the current build.
-- [ ] The artifact documents how to regenerate it.
-- [ ] An automated test asserts the complete set of route templates and HTTP methods registered by the clinic API.
-- [ ] The test passes without a running SQL Server instance.
-- [ ] The test fails if a route is added, removed, or has its template or method changed.
-- [ ] No endpoint has moved; the solution builds and the existing test suite passes unchanged.
-- [ ] The frontend type definitions are untouched.
+- [x] A reference API description artifact is committed, generated from the current build.
+- [x] The artifact documents how to regenerate it.
+- [x] An automated test asserts the complete set of route templates and HTTP methods registered by the clinic API.
+- [x] The test passes without a running SQL Server instance.
+- [x] The test fails if a route is added, removed, or has its template or method changed.
+- [x] No endpoint has moved; the solution builds and the existing test suite passes unchanged.
+- [x] The frontend type definitions are untouched.

@@ -9,13 +9,13 @@ These are the most stateful handlers in the codebase. Move them verbatim; the st
 
 **Blocked by:** 05: Extract Client, Patient modules
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Appointment and Purchase Order each have a dedicated module with its own mapping entry point.
-- [ ] The dispatcher no longer contains any handler or route-group construction for these two groups.
-- [ ] Arriving, starting a consult, and cancelling an appointment still produce the same statuses.
-- [ ] Starting a consult on an appointment that already has one still returns the existing consult rather than creating a second.
-- [ ] Receiving a purchase order still creates one lot and one receive transaction per received line, and still derives received versus partially received status correctly.
-- [ ] The route-table test passes and the reference API description is unchanged.
-- [ ] The existing test suite passes unmodified.
-- [ ] No endpoint outside these two groups was modified.
+- [x] Appointment and Purchase Order each have a dedicated module with its own mapping entry point.
+- [x] The dispatcher no longer contains any handler or route-group construction for these two groups.
+- [x] Arriving, starting a consult, and cancelling an appointment still produce the same statuses.
+- [x] Starting a consult on an appointment that already has one still returns the existing consult rather than creating a second.
+- [x] Receiving a purchase order still creates one lot and one receive transaction per received line, and still derives received versus partially received status correctly.
+- [x] The route-table test passes and the reference API description is unchanged.
+- [x] The existing test suite passes unmodified.
+- [x] No endpoint outside these two groups was modified.

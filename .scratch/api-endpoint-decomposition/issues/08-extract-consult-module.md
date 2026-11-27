@@ -17,16 +17,16 @@ Handler bodies move verbatim. The fallback behaviour when no procedure carries a
 
 **Blocked by:** 07: Extract Invoice module
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Consult has a dedicated module with its own mapping entry point.
-- [ ] The dispatcher contains no handlers and no route-group construction; it is a short ordered list of module registrations.
-- [ ] The dispatcher's public signature is unchanged.
-- [ ] The consult detail response still includes every nested collection with the same shape and ordering.
-- [ ] Adding a diagnosis or procedure with the save-to-catalogue option still creates the catalogue entry before the consult line.
-- [ ] Dispensing a medication and recording a vaccination still allocate stock and write dispense transactions with the same reference types.
-- [ ] Finalising a consult still completes its appointment.
-- [ ] Generating an invoice twice still returns the existing invoice rather than creating a second.
-- [ ] The route-table test passes and the reference API description is unchanged.
-- [ ] The existing test suite passes unmodified.
-- [ ] No endpoint outside the consult group was modified.
+- [x] Consult has a dedicated module with its own mapping entry point.
+- [x] The dispatcher contains no handlers and no route-group construction; it is a short ordered list of module registrations.
+- [x] The dispatcher's public signature is unchanged.
+- [x] The consult detail response still includes every nested collection with the same shape and ordering.
+- [x] Adding a diagnosis or procedure with the save-to-catalogue option still creates the catalogue entry before the consult line.
+- [x] Dispensing a medication and recording a vaccination still allocate stock and write dispense transactions with the same reference types.
+- [x] Finalising a consult still completes its appointment.
+- [x] Generating an invoice twice still returns the existing invoice rather than creating a second.
+- [x] The route-table test passes and the reference API description is unchanged.
+- [x] The existing test suite passes unmodified.
+- [x] No endpoint outside the consult group was modified.

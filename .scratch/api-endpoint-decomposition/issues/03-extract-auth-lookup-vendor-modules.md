@@ -12,11 +12,11 @@ Watch the lookup group: it is registered as a bare route on the API group rather
 
 **Blocked by:** 02: Extract shared endpoint helpers
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Auth, Lookup, and Vendor each have a dedicated module with its own mapping entry point.
-- [ ] The dispatcher no longer contains any handler or route-group construction for these three groups.
-- [ ] The lookup endpoint's path is unchanged; no new path segment was introduced.
-- [ ] The route-table test passes and the reference API description is unchanged.
-- [ ] The existing test suite passes unmodified.
-- [ ] No endpoint outside these three groups was modified.
+- [x] Auth, Lookup, and Vendor each have a dedicated module with its own mapping entry point.
+- [x] The dispatcher no longer contains any handler or route-group construction for these three groups.
+- [x] The lookup endpoint's path is unchanged; no new path segment was introduced.
+- [x] The route-table test passes and the reference API description is unchanged.
+- [x] The existing test suite passes unmodified.
+- [x] No endpoint outside these three groups was modified.

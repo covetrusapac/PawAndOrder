@@ -12,13 +12,13 @@ Update every call site in the same change. Delete the originals. This is a move,
 
 **Blocked by:** 01: Pin the API contract
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Request validation logic exists in exactly one internal shared module; no endpoint handler contains its own copy.
-- [ ] Inventory lot resolution exists in exactly one internal shared module; both clinical dispensing and invoice-line dispensing call it.
-- [ ] Invoice line construction exists in exactly one internal shared module; both constructors are co-located and delegate to the existing GST pricing module.
-- [ ] No shared helper is public.
-- [ ] No duplicate copy of any of the four helpers remains anywhere in the API assembly.
-- [ ] The route-table test passes and the reference API description is unchanged.
-- [ ] The existing unit tests pass unmodified.
-- [ ] No endpoint's behaviour, status codes, or error messages changed.
+- [x] Request validation logic exists in exactly one internal shared module; no endpoint handler contains its own copy.
+- [x] Inventory lot resolution exists in exactly one internal shared module; both clinical dispensing and invoice-line dispensing call it.
+- [x] Invoice line construction exists in exactly one internal shared module; both constructors are co-located and delegate to the existing GST pricing module.
+- [x] No shared helper is public.
+- [x] No duplicate copy of any of the four helpers remains anywhere in the API assembly.
+- [x] The route-table test passes and the reference API description is unchanged.
+- [x] The existing unit tests pass unmodified.
+- [x] No endpoint's behaviour, status codes, or error messages changed.

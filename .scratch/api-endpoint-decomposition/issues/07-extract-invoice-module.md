@@ -16,14 +16,14 @@ Handler bodies move verbatim. The document-numbering scheme stays exactly as imp
 
 **Blocked by:** 06: Extract Appointment, Purchase Order modules
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Invoice has a dedicated module with its own mapping entry point.
-- [ ] The dispatcher no longer contains any handler or route-group construction for invoicing.
-- [ ] Adding a line still dispenses stock only for inventory-tracked products, and still writes the dispense transaction with the same reference type and notes.
-- [ ] Deleting a line still returns stock only when the line was marked as having dispensed it.
-- [ ] Invoice totals, GST, amount paid, and balance due are recomputed identically after every mutation.
-- [ ] An overpayment is still rejected with the same status and message.
-- [ ] The route-table test passes and the reference API description is unchanged.
-- [ ] The existing test suite passes unmodified, including the invoice recalculation test.
-- [ ] No endpoint outside invoicing was modified.
+- [x] Invoice has a dedicated module with its own mapping entry point.
+- [x] The dispatcher no longer contains any handler or route-group construction for invoicing.
+- [x] Adding a line still dispenses stock only for inventory-tracked products, and still writes the dispense transaction with the same reference type and notes.
+- [x] Deleting a line still returns stock only when the line was marked as having dispensed it.
+- [x] Invoice totals, GST, amount paid, and balance due are recomputed identically after every mutation.
+- [x] An overpayment is still rejected with the same status and message.
+- [x] The route-table test passes and the reference API description is unchanged.
+- [x] The existing test suite passes unmodified, including the invoice recalculation test.
+- [x] No endpoint outside invoicing was modified.

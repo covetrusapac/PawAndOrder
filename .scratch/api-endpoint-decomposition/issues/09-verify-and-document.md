@@ -12,16 +12,16 @@ Any bug discovered during the move is logged for separate work, not fixed here. 
 
 **Blocked by:** 08: Extract Consult module
 
-**Status:** ready-for-agent
+**Status:** done — manual smoke outstanding
 
-- [ ] The regenerated API description is byte-identical to the pre-refactor baseline.
-- [ ] The backend solution builds with no new warnings.
-- [ ] The full backend test suite passes, with no existing test modified to accommodate the refactor.
-- [ ] The frontend type checks and builds successfully.
+- [x] The regenerated API description is byte-identical to the pre-refactor baseline.
+- [x] The backend solution builds with no new warnings.
+- [x] The full backend test suite passes, with no existing test modified to accommodate the refactor.
+- [x] The frontend type checks and builds successfully.
 - [ ] The manual smoke pass completes with no regressions.
-- [ ] No API module exceeds roughly 450 lines.
-- [ ] The dispatcher reads as a short ordered manifest of module registrations.
-- [ ] The system design documentation records the module layout, the dispatcher's role, and the three shared behaviours.
-- [ ] The Consult module's sub-resource split is recorded as a follow-up, not performed.
-- [ ] Any bugs found during the move are logged separately and remain unfixed.
-- [ ] The specification document is marked as implemented.
+- [x] No API module exceeds roughly 450 lines.
+- [x] The dispatcher reads as a short ordered manifest of module registrations.
+- [x] The system design documentation records the module layout, the dispatcher's role, and the three shared behaviours.
+- [x] The Consult module's sub-resource split is recorded as a follow-up, not performed.
+- [x] Any bugs found during the move are logged separately and remain unfixed.
+- [x] The specification document is marked as implemented.

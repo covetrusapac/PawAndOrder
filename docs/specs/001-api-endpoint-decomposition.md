@@ -1,6 +1,6 @@
 # Spec 001 — Decompose the Clinic API Endpoint Module
 
-**Status:** Ready for implementation
+**Status:** Implemented — see [system-design.md](../system-design.md)
 **Type:** Pure structural refactor (no behaviour change)
 **Area:** Backend — `PawAndOrder.Api`
 

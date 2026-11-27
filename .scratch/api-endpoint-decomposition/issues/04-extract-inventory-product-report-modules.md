@@ -10,12 +10,12 @@ Handler bodies move verbatim. Where two groups overlap in purpose — the invent
 
 **Blocked by:** 03: Extract Auth, Lookup, Vendor modules
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Inventory, Product, and Report each have a dedicated module with its own mapping entry point.
-- [ ] The dispatcher no longer contains any handler or route-group construction for these three groups.
-- [ ] All six report endpoints are registered and their query parameters are unchanged.
-- [ ] The route-table test passes and the reference API description is unchanged.
-- [ ] The existing test suite passes unmodified.
-- [ ] No endpoint outside these three groups was modified.
-- [ ] The stock view and the low-stock report both still behave exactly as before; neither was merged into the other.
+- [x] Inventory, Product, and Report each have a dedicated module with its own mapping entry point.
+- [x] The dispatcher no longer contains any handler or route-group construction for these three groups.
+- [x] All six report endpoints are registered and their query parameters are unchanged.
+- [x] The route-table test passes and the reference API description is unchanged.
+- [x] The existing test suite passes unmodified.
+- [x] No endpoint outside these three groups was modified.
+- [x] The stock view and the low-stock report both still behave exactly as before; neither was merged into the other.

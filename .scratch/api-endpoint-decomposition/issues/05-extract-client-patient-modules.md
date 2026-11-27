@@ -9,12 +9,12 @@ Handler bodies move verbatim. These groups carry the Australian-specific validat
 
 **Blocked by:** 04: Extract Inventory, Product, Report modules
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Client and Patient each have a dedicated module with its own mapping entry point.
-- [ ] The dispatcher no longer contains any handler or route-group construction for these two groups.
-- [ ] The client and patient detail responses still include the same nested collections, same ordering, and same result limits.
-- [ ] The route-table test passes and the reference API description is unchanged.
-- [ ] The existing test suite passes unmodified.
-- [ ] No endpoint outside these two groups was modified.
-- [ ] No validation rule was changed or moved.
+- [x] Client and Patient each have a dedicated module with its own mapping entry point.
+- [x] The dispatcher no longer contains any handler or route-group construction for these two groups.
+- [x] The client and patient detail responses still include the same nested collections, same ordering, and same result limits.
+- [x] The route-table test passes and the reference API description is unchanged.
+- [x] The existing test suite passes unmodified.
+- [x] No endpoint outside these two groups was modified.
+- [x] No validation rule was changed or moved.
